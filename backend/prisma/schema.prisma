@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  OPERATOR
+}
+enum FractionalTimes {
+  NONE
+  MINUTES_30
+  MINUTES_15
+  MINUTES_10
+  MINUTES_05
+}
+
+model User {
+  id String @id @default(uuid())
+
+  name     String
+  email    String   @unique
+  password String
+  role     UserRole @default(OPERATOR)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model PriceConfig {
+  id String @id @default(uuid())
+
+  firstHourPrice Decimal @db.Decimal(10, 2)
+  additionalHourPrice Decimal @db.Decimal(10, 2)
+  permitFractionalTime Boolean @default(false)
+  fractionalTime FractionalTimes @default(NONE)
+  isActive Boolean @default(true)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt  
+}

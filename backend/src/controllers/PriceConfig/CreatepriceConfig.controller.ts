@@ -8,7 +8,7 @@ class CreatePriceConfig {
         const service = new CreatePriceConfigService();
         const response = await service.execute(input);
 
-        res.status(201).json(response);
+        return res.status(201).json(response);
     }
 }
 export default new CreatePriceConfig();

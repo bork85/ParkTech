@@ -11,19 +11,25 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  // url      = env("DATABASE_URL")
 }
 
 enum UserRole {
   ADMIN
   OPERATOR
 }
+
 enum FractionalTimes {
   NONE
   MINUTES_30
   MINUTES_15
   MINUTES_10
   MINUTES_05
+}
+
+enum ParkingRecordStatus {
+  ACTIVE
+  FINISHED
 }
 
 model User {
@@ -34,19 +40,41 @@ model User {
   password String
   role     UserRole @default(OPERATOR)
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  entryParkingRecords ParkingRecord[] @relation("EntryCreator")
+  exitParkingRecords  ParkingRecord[] @relation("ExitCreator")
 }
 
 model PriceConfig {
   id String @id @default(uuid())
 
-  firstHourPrice Decimal @db.Decimal(10, 2)
-  additionalHourPrice Decimal @db.Decimal(10, 2)
-  permitFractionalTime Boolean @default(false)
-  fractionalTime FractionalTimes @default(NONE)
-  isActive Boolean @default(true)
+  firstHourPrice       Decimal         @db.Decimal(10, 2)
+  additionalHourPrice  Decimal         @db.Decimal(10, 2)
+  permitFractionalTime Boolean         @default(false)
+  fractionalTime       FractionalTimes @default(NONE)
+  isActive             Boolean         @default(true)
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ParkingRecord {
+  id String @id @default(uuid())
+
+  plate      String
+  model      String
+  color      String
+  exitAt     DateTime?
+  totalValue Decimal?            @db.Decimal(10, 2)
+  status     ParkingRecordStatus @default(ACTIVE)
+
+  entryUserID String
+  exitUserId  String?
+
+  entryUser User @relation("EntryCreator", fields: [entryUserID], references: [id])
+  exitUser  User? @relation("ExitCreator", fields: [exitUserId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

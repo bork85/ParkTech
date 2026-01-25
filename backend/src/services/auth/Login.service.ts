@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import prisma from "../../config/database";
 import "dotenv/config";
+import { AppError } from '../../utils/errors';
 
 interface LoginInput {
     email: string;
@@ -16,11 +17,11 @@ class LoginService {
             }
         })
         if(!user){
-            throw Error("Credenciais inválidas, tente novamente")
+            throw new AppError("Credenciais inválidas, tente novamente", 401)
         }
         const passwordMatch = await bcrypt.compare(input.password, user.password);
         if(!passwordMatch){
-            throw Error("Credenciais inválidas, tente novamente")
+            throw new AppError("Credenciais inválidas, tente novamente", 401)
         }
         if(process.env.JWT_SECRET_KEY){
             const JWT_Key: string = process.env.JWT_SECRET_KEY;
@@ -43,7 +44,7 @@ class LoginService {
         }
         return {token, user: safeUser};
         }
-        throw Error("Erro interno no servidor, tente mais tarde. Code:jwt2")
+        throw new AppError("Erro interno no servidor, tente mais tarde. Code:jwt2", 500)
     };   
     
 }

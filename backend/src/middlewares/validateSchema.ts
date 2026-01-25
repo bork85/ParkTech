@@ -3,6 +3,9 @@ import type { ZodSchema } from "zod";
 
 
 export const validateSchema = (schema: ZodSchema) => (req: Request, res: Response, next: NextFunction) => {
+        if(req.params.id) {
+            req.body.id = req.params.id;
+        }
         const result = schema.safeParse(req.body)
 
         if(!result.success){

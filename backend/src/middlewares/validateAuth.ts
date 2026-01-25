@@ -2,18 +2,19 @@
 import type { NextFunction, Request, Response } from "express";
 import  jwt  from "jsonwebtoken";
 import { UserPayload } from "../@types/user";
+import { AppError } from "../utils/errors";
 
 export const validateAuth = (req: Request, _res: Response, next: NextFunction)=> {
     const header = req.headers.authorization;
-    if(!header) return Error('Token não enviado');
+    if(!header) return new AppError('Token não enviado', 401);
 
     const token = header.split(' ')[1];
 
-    if(!token) return Error('Token não configurado');
+    if(!token) return new AppError('Token não configurado', 401);
 
     const secret = process.env.JWT_SECRET_KEY as string;
 
-    if(!secret) return Error('JWT não configurado');
+    if(!secret) return new AppError('JWT não configurado', 500);
 
     try {
         const decoded = jwt.verify(token, secret) as UserPayload
@@ -23,7 +24,7 @@ export const validateAuth = (req: Request, _res: Response, next: NextFunction)=>
         }
         
     } catch (err) {
-        throw Error("Token inválido")
+        throw new AppError("Token inválido", 401)
     }
 
     next();

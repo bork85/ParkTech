@@ -1,6 +1,7 @@
 import prisma from "../../config/database";
 import bcrypt from "bcrypt";
 import { UserRole } from "../../generated/prisma/enums";
+import { AppError } from "../../utils/errors";
 
 interface CreateUserInput {
     name: string,
@@ -18,7 +19,7 @@ class CreateUserService {
         });
         if(existUser){
             //console.log("User with this email already exists.")
-            throw new Error("User with this email already exists.");
+            throw new AppError("User with this email already exists.");
         }
         //console.log("DADOS DO SERVICO - INPUT:", input)
         const hashPassword = await bcrypt.hash(input.password, 8);

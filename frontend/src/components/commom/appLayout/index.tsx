@@ -1,21 +1,25 @@
 import { Outlet } from "react-router-dom";
 import { Header } from "../Header";
 import { SideBar } from "../SideBar";
+//import { Footer } from "../footer";
 
-export function AppLayout(){
+export function AppLayout() {
+  return (
+    <div
+      className="flex h-screen bg-background"
+      style={{ fontFamily: "Poppins" }}
+    >
+      <SideBar />
 
-    return (
-        <div className="flex h-screen bg-background">
-            <SideBar />
+      <div className="w-screen h-screen flex flex-col justify-between">
+        <Header />
 
-            <div className="w-full h-full">
-                <Header />
+        <main className="p-4 h-full">
+          <Outlet />
+        </main>
 
-                <main className="p-4">
-                    <Outlet />
-                </main>
-            </div>
-
-        </div>
-    )
+        {/* <Footer /> */}
+      </div>
+    </div>
+  );
 }

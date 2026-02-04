@@ -1,9 +1,16 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { Header } from "../Header";
 import { SideBar } from "../SideBar";
+import { useAuth } from "@/providers/authProvider";
 //import { Footer } from "../footer";
 
 export function AppLayout() {
+    const {isAuthenticated} = useAuth();
+
+    if(!isAuthenticated) {
+       return ( <Navigate to="/login" replace /> )
+    }
+    console.log(isAuthenticated)
   return (
     <div
       className="flex h-screen bg-background"

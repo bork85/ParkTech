@@ -3,6 +3,7 @@ import Login from "@/pages/auth/login";
 import Register from "@/pages/auth/register";
 import AuthLayout from "@/components/auth/layout";
 import { AppLayout } from "@/components/commom/appLayout";
+import VehiclesPage from "@/pages/vehicles";
 
 export const router = createBrowserRouter([
   {
@@ -23,7 +24,7 @@ export const router = createBrowserRouter([
     children: [
         {
             path: "/vehicles",
-            element: <h2>Pagina dos veiculos</h2>,
+            element: <VehiclesPage />,
         },
     ],
   },

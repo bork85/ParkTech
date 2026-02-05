@@ -5,11 +5,11 @@ export type Vehicle = {
     plate: string;
     model: string;
     color: string;
-    totalValue: number;
-    exitAt?: Date;
+    totalValue?: number;
+    exitAt?: string;
     status: StatusParking;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt?: string;
     entryUserID: string;
-    exitUserID: string;
+    exitUserID?: string;
 }

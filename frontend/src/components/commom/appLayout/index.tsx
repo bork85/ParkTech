@@ -10,7 +10,7 @@ export function AppLayout() {
     if(!isAuthenticated) {
        return ( <Navigate to="/login" replace /> )
     }
-    console.log(isAuthenticated)
+    //console.log(isAuthenticated)
   return (
     <div
       className="flex h-screen bg-background"

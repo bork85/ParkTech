@@ -21,12 +21,12 @@ export function SideBar() {
 
       <nav className="py-4">
         <ul>
-          {menuItems.map((item) => {
+          {menuItems.map((item, index) => {
             const isActive = item.path === pathname;
             const Icon = item.icon
             return (
               <li
-                key={item.path}
+                key={index}
                 className={`hover:bg-sidebar-border/50 w-full flex items-center h-12 gap-4 px-6 transition-all text-sm 
                     ${isActive ? 'bg-sidebar-border/80 border-l-4 border-sidebar-accent text-white font-semibold' : 'text-white/80'}`}
               >

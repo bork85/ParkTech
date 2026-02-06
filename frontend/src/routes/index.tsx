@@ -4,6 +4,8 @@ import Register from "@/pages/auth/register";
 import AuthLayout from "@/components/auth/layout";
 import { AppLayout } from "@/components/commom/appLayout";
 import VehiclesPage from "@/pages/vehicles";
+import UsersPage from "@/pages/users";
+import PricesPage from "@/pages/prices";
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +27,14 @@ export const router = createBrowserRouter([
         {
             path: "/vehicles",
             element: <VehiclesPage />,
+        },
+        {
+            path: "/users",
+            element: <UsersPage />,
+        },
+        {
+            path: "/prices",
+            element: <PricesPage />,
         },
     ],
   },

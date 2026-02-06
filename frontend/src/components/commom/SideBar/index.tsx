@@ -1,4 +1,4 @@
-import { ArrowRightLeft, Car, ChartColumn, DollarSign, LayoutDashboard, Settings } from "lucide-react";
+import { ArrowRightLeft, Car, ChartColumn, DollarSign, LayoutDashboard, Settings, Users } from "lucide-react";
 import { Logo } from "../logo";
 import { useLocation } from "react-router-dom";
 
@@ -7,7 +7,8 @@ export function SideBar() {
   const menuItems = [
     { label: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
     { label: "Movimentações", path: "/movimentations", icon: ArrowRightLeft },
-    { label: "Veículos", path: "/vehicles", icon: Car },
+    { label: "Veículos", path: "/vehicles", icon: Car },    
+    { label: "Usuários", path: "/users", icon: Users },
     { label: "Preços", path: "/prices", icon: DollarSign },
     { label: "Relatórios", path: "/reports", icon: ChartColumn },
     { label: "Configurações", path: "/settings", icon: Settings },

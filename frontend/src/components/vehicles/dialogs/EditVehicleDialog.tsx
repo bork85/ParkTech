@@ -34,7 +34,7 @@ export function EditVehicleDialog({editingVehicle}: EditVehicleProps) {
       color: editingVehicle.color,
     }
   });
-  const handleCreateVehicle = (data: EditVehicleSchema) => console.log(data);
+  const handleEditVehicle = (data: EditVehicleSchema) => console.log(data);
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -49,7 +49,7 @@ export function EditVehicleDialog({editingVehicle}: EditVehicleProps) {
             Informe aqui os dados do veículo
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit(handleCreateVehicle)}>
+        <form onSubmit={handleSubmit(handleEditVehicle)}>
           <InputWithLabel
             id="plate"
             label="Placa:"

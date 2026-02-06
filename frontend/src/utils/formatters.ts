@@ -11,12 +11,27 @@ export function formatDate(dateParam: Date | string){
     return formater
 }
 
+export function formatDateToDMY(dateParam: Date | string){
+    const date = typeof dateParam === 'string' ? new Date(dateParam) : dateParam;
+    const formater = new Intl.DateTimeFormat('pt-BR', {        
+        day: '2-digit',
+        month: '2-digit',
+        year: "numeric"
+    }).format(date);
+
+    return formater
+}
+
 export function getVehicleStatus(status:StatusParking) {
     const options = {
         ["ACTIVE"]: "Estacionado",
         ["FINISHED"]: "Saída Registrada"
     }
     return options[status]
+}
+
+export function GetPriceStatus(isActive: boolean) {
+    return isActive ? "Ativo" : "Inativo"
 }
 
 export function calcPermanency(entry: Date | string, exit?: Date | string | null | undefined) {
@@ -44,4 +59,13 @@ export function calcPermanency(entry: Date | string, exit?: Date | string | null
 
 export function plateFormat(plate: string) {
     return plate.toUpperCase().replace('-', '');
+}
+
+export function getCurrency(value: number) {
+    const currency = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    }).format(value)
+
+    return currency
 }

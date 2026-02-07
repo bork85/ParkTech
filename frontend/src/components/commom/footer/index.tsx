@@ -1,10 +1,7 @@
-
-
-export function Footer(){
-
-    return (
-        <footer className="h-6 w-full bg-white flex items-center justify-end">
-            <p className="bg-white text-primary text-[10px] w-full text-end p-2">@2026 - Developed by unBork - Soluções Digitais</p>
-        </footer>
-    )
+export function Footer() {
+  return (
+    <footer className="w-full h-15 border-t border-sidebar-border text-xs text-center text-sidebar-border flex flex-col justify-center">
+      <p>@2026 - unBork Soluções Digitais</p>
+    </footer>
+  );
 }

@@ -1,6 +1,7 @@
 import { ArrowRightLeft, Car, ChartColumn, DollarSign, LayoutDashboard, Settings, Users } from "lucide-react";
 import { Logo } from "../logo";
 import { useLocation } from "react-router-dom";
+import { Footer } from "../footer";
 
 export function SideBar() {
   const { pathname } = useLocation();
@@ -20,7 +21,7 @@ export function SideBar() {
         <Logo size="md" variant="light" />
       </div>
 
-      <nav className="py-4">
+      <nav className="py-4 h-full">
         <ul>
           {menuItems.map((item, index) => {
             const isActive = item.path === pathname;
@@ -38,6 +39,7 @@ export function SideBar() {
           })}
         </ul>
       </nav>
+      <Footer />
     </aside>
   );
 }

@@ -6,6 +6,8 @@ import { AppLayout } from "@/components/commom/appLayout";
 import VehiclesPage from "@/pages/vehicles";
 import UsersPage from "@/pages/users";
 import PricesPage from "@/pages/prices";
+import SettingsPage from "@/pages/settings";
+import Remind from "@/pages/auth/remind";
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +21,10 @@ export const router = createBrowserRouter([
         path: "/register",
         element: <Register />,
       },
+      {
+        path: "/remind-login",
+        element: <Remind />,
+      }
     ],
   },
   {
@@ -35,6 +41,10 @@ export const router = createBrowserRouter([
         {
             path: "/prices",
             element: <PricesPage />,
+        },
+        {
+            path: "/settings",
+            element: <SettingsPage />,
         },
     ],
   },

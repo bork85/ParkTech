@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/providers/authProvider";
 import { loginUsers } from "@/services/users/loginUser.service";
 
-function Login() {
+function Remind() {
   const {login} = useAuth()
   const navigate = useNavigate()
   
@@ -34,10 +34,10 @@ function Login() {
       <form onSubmit={handleSubmit(onSubmit)}
     className="flex flex-col items-center">      
       <h1 className="text-2xl text-gray-800 text-center p-2 font-semibold">
-        Acesso ao sistema de estacionamento
+        Esqueci minha senha
       </h1>
       <p className="text-center text-sm text-muted-foreground mb-4">
-        Insira suas credenciais para continuar
+        Informe seu email para continuar
       </p>
       <div className="w-100">
         <InputWithLabel
@@ -48,27 +48,21 @@ function Login() {
           error={errors.email?.message}
           {...register("email")}
         />
-        <InputWithLabel
-          id="password"
-          label="Senha"
-          type="password"
-          placeholder="********"
-          error={errors.password?.message}
-          {...register("password")}
-        />
-        <Button className="w-full mt-8 h-12">Entrar</Button>
+        
+        <Button className="w-full mt-8 h-12">Solicitar dados de acesso</Button>
       </div>
-    </form>
-        <a href="/remind-login">
-        <Button variant="link" className="w-full mt-4 ">
-          Esqueci minha senha
-        </Button></a>
+    </form>        
         <a href="/register">
-        <Button variant="link" className="w-full">
+        <Button variant="link" className="w-full mt-4">
           Não tem conta? Crie agora
         </Button></a>
+        <a href="/login">
+        <Button variant="link" className="w-full">
+          Já possui uma conta? Faça login aqui
+        </Button>
+      </a>
     </div>
   );
 }
 
-export default Login;
+export default Remind;

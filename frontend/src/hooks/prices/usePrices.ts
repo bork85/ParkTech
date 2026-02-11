@@ -6,6 +6,7 @@ interface PricesResponse {
     data: Price[] | [];
     error: boolean;
     isLoading: boolean;
+    isValid?: boolean;
 }
 
 export const usePrices = ():PricesResponse => {

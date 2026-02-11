@@ -1,4 +1,5 @@
-import { ArrowRightLeft, Car, ChartColumn, DollarSign, LayoutDashboard, Settings, Users } from "lucide-react";
+//import { ArrowRightLeft, Car, ChartColumn, DollarSign, LayoutDashboard, Settings, Users } from "lucide-react";
+import { Car, DollarSign, Settings, Users } from "lucide-react";
 import { Logo } from "../logo";
 import { useLocation } from "react-router-dom";
 import { Footer } from "../footer";
@@ -6,12 +7,12 @@ import { Footer } from "../footer";
 export function SideBar() {
   const { pathname } = useLocation();
   const menuItems = [
-    { label: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
-    { label: "Movimentações", path: "/movimentations", icon: ArrowRightLeft },
+    //{ label: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
+    //{ label: "Movimentações", path: "/movimentations", icon: ArrowRightLeft },
     { label: "Veículos", path: "/vehicles", icon: Car },    
     { label: "Usuários", path: "/users", icon: Users },
     { label: "Preços", path: "/prices", icon: DollarSign },
-    { label: "Relatórios", path: "/reports", icon: ChartColumn },
+    //{ label: "Relatórios", path: "/reports", icon: ChartColumn },
     { label: "Configurações", path: "/settings", icon: Settings },
   ];
 

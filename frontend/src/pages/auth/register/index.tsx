@@ -8,19 +8,33 @@ import {
   type RegisterSchemaType,
 } from "@/schemas/auth/register.schema";
 import { useNavigate } from "react-router-dom";
+import { registerUser } from "@/services/auth/register.service";
+import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
+import { sleep } from "@/utils/sleep";
+import { AxiosError } from "axios";
 
 function Register() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(RegisterSchema),
   });
   const navigate = useNavigate();
-  const onSubmit = (data: RegisterSchemaType) => {
-    console.log(data);
-    navigate("/login");
+  const onSubmit = async (data: RegisterSchemaType) => {
+    try {
+      await registerUser(data);
+      toast.success("Account created successfully!");
+      await sleep();
+      navigate("/login");
+    } catch (err){
+      if (err instanceof AxiosError) {
+        const messageError = err.response?.data.error;
+        toast.error(messageError || "Error creating account, please try again")
+      }
+    }
   };
   return (
     <div>
@@ -61,8 +75,13 @@ function Register() {
             {...register("password")}
           />
 
-          <Button type="submit" className="w-full mt-8 h-12">
-            Criar Conta
+          <Button type="submit" className="w-full mt-8 h-12" disabled={isSubmitting}>
+            {isSubmitting ? (
+              <> 
+              <Spinner />
+              "Processando..."
+            </>) : ("Criar Conta")}
+            
           </Button>
         </div>
       </form>

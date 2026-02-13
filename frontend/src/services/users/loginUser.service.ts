@@ -1,6 +1,5 @@
-//import { api } from "@/lib/axios";
-import type { roleType } from "@/types/users.types";
-import { sleep } from "@/utils/sleep";
+import { api } from "@/lib/axios";
+import { toast } from "sonner";
 
 interface User2 {
     email: string;
@@ -9,8 +8,10 @@ interface User2 {
 
 export async function loginUsers(data: User2) {
     // COMENTADO PARA FASE DE TESTES, USANDO MOCK DE DADOS
-    //const response = await api.get("/user")
-    const mockUsers = [
+    const response = await api.post("/login", data)
+    
+
+/*     const mockUsers = [
         {
             id: "jfhjfhwkjhckjwhvhwkjvhwkh",
             name: "Daniel Bork",
@@ -44,14 +45,14 @@ export async function loginUsers(data: User2) {
             updatedAt: undefined,
         },
     ]
-    await sleep()
+    await sleep() */
 
-    const userValid = mockUsers.find(user => user.email === data.email)
+    const userValid = response.data.user.email === data.email;
 
     if(!userValid) {
-        alert("Usuário ou senha inválidos!")
-        throw new Error("Usuário ou senha inválidos!")
+        toast.error("User or Password invalid!")
+        throw new Error("User or Password invalid!")
     }
 
-    return {data: userValid};
+    return {data: response.data};
 }

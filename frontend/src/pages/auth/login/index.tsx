@@ -7,6 +7,8 @@ import { LoginSchema, type LoginSchemaType } from "@/schemas/auth/login.schema";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/providers/authProvider";
 import { loginUsers } from "@/services/users/loginUser.service";
+import { toast } from "sonner";
+import { sleep } from "@/utils/sleep";
 
 function Login() {
   const {login} = useAuth()
@@ -15,10 +17,13 @@ function Login() {
   const handleLogin = async (userData: LoginSchemaType) => {
     try {
       const response = await loginUsers(userData)
-      login(response.data.name, response.data.email)
+      console.log(response)
+      toast.success("Login successfully")
+      await sleep()
+      login(response.data.user.name, response.data.user.email, response.data.token)
       navigate("/vehicles")
     } catch (error) {
-      console.error("Erro no login:", error)
+      toast.error("Login error, please try again")
     }
   }
   

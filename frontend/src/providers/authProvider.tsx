@@ -1,3 +1,4 @@
+import { getAuthUser } from "@/services/auth/getAuthUser.service";
 import { createContext, useContext, useState, useEffect } from "react";
 
 type AuthContextData = {
@@ -6,7 +7,8 @@ type AuthContextData = {
         email: string
     } | null,
     isAuthenticated: boolean,
-    login: (name: string, email: string) => void,
+    isLoading: boolean,
+    login: (name: string, email: string, token: string) => void,
     logout: () => void
 }
 
@@ -18,8 +20,13 @@ export function AuthProvider({ children }: {children: React.ReactNode}) {
         const stored = localStorage.getItem("@parktech:user");
         return stored ? JSON.parse(stored) : null;
     });
+    const [token, setToken] = useState<string | null>(() => {
+        const TokenStored = localStorage.getItem("@parktech:token");
+        return TokenStored ? TokenStored : null;
+    });
+    const [isLoading, setIsLoading] = useState(true);
     
-    const isAuthenticated = !!user;
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
 
     useEffect(() => {
         if (user) {
@@ -29,16 +36,41 @@ export function AuthProvider({ children }: {children: React.ReactNode}) {
         }
     }, [user]);
 
-    const login = (name: string, email: string) => {
+    useEffect(()=> {
+        if (token) {
+            localStorage.setItem("@parktech:token", token);
+        } else {
+            localStorage.removeItem("@parktech:token");
+        }
+    }, [token]);
+
+    useEffect(() => {
+        async function getValidAuthUser(){
+            try {
+                setIsLoading(true)
+                await getAuthUser();
+                setIsAuthenticated(true);
+            } catch (error) {
+                setIsAuthenticated(false)
+            } finally {
+                setIsLoading(false)
+            }
+        }
+        getValidAuthUser();
+    },[])
+
+    const login = (name: string, email: string, token: string) => {
         setUser({ name, email });
+        setToken(token);
     }
 
     const logout = () => {
         setUser(null);
+        setToken(null);
     }
 
     return (
-        <AuthContext.Provider value={{user, isAuthenticated, login, logout}}>
+        <AuthContext.Provider value={{user, isAuthenticated, isLoading, login, logout}}>
             {children}
         </AuthContext.Provider>
     )

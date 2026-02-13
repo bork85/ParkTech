@@ -28,5 +28,5 @@
       "@/*": [ "./src/*" ]
     }
   },
-  "include": ["src", "src/hooks/vehicles/useVehicles.ts"]
+  "include": ["src", "src/hooks/vehicles/useVehicles.ts", "../index.tsx"]
 }

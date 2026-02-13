@@ -5,9 +5,9 @@ import { useAuth } from "@/providers/authProvider";
 //import { Footer } from "../footer";
 
 export function AppLayout() {
-    const {isAuthenticated} = useAuth();
+    const {isAuthenticated, isLoading} = useAuth();
 
-    if(!isAuthenticated) {
+    if(!isAuthenticated && !isLoading) {
        return ( <Navigate to="/login" replace /> )
     }
     //console.log(isAuthenticated)

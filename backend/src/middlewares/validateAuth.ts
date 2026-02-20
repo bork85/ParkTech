@@ -6,15 +6,15 @@ import { AppError } from "../utils/errors";
 
 export const validateAuth = (req: Request, _res: Response, next: NextFunction)=> {
     const header = req.headers.authorization;
-    if(!header) return new AppError('Token não enviado', 401);
+    if(!header) throw new AppError('Token não enviado', 401);
 
     const token = header.split(' ')[1];
 
-    if(!token) return new AppError('Token não configurado', 401);
+    if(!token) throw new AppError('Token não configurado', 401);
 
     const secret = process.env.JWT_SECRET_KEY as string;
 
-    if(!secret) return new AppError('JWT não configurado', 500);
+    if(!secret) throw new AppError('JWT não configurado', 500);
 
     try {
         const decoded = jwt.verify(token, secret) as UserPayload
@@ -26,6 +26,5 @@ export const validateAuth = (req: Request, _res: Response, next: NextFunction)=>
     } catch (err) {
         throw new AppError("Token inválido", 401)
     }
-
     next();
 }

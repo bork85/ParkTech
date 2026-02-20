@@ -7,14 +7,15 @@ interface InputWithLabelProps extends React.ComponentProps<"input"> {
   label: string
   labelClassName?: string
   error?: string
+  isInline?: boolean
 }
 
 const InputWithLabel = React.forwardRef<HTMLInputElement, InputWithLabelProps>(
-  ({ error, label, labelClassName, className, id, ...props }, ref) => {
+  ({ error, label, labelClassName, className, id, isInline, ...props }, ref) => {
     const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`
     
     return (
-      <div className="mb-2">
+      <div className={cn("mb-2", isInline && "flex items-center gap-2")}>
         <Label htmlFor={inputId} className={cn(labelClassName)}>
           {label}
         </Label>

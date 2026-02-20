@@ -14,14 +14,14 @@ import { CreateUserDialog } from "@/components/users/dialogs/CreateUserDialog";
 const tableColumns = ["NOME", "E-MAIL", "CARGO", "ADMISSÃO"];
 
 function UsersPage() {
-  const { data, isLoading } = useUsers();
+  const { data, isLoading, refetch } = useUsers();
   return (
     <div>
       <div>
         <h2 className="font-semibold mb-4 text-xl">Gestão de usuários</h2>
       </div>
       <div className="bg-white rounded-lg shadow-md flex items-center justify-end p-4 gap-4">
-       <CreateUserDialog />
+       <CreateUserDialog onSuccess={refetch}/>
       </div>
       <div className="mt-4">
         <Table>

@@ -20,7 +20,7 @@ function Login() {
       console.log(response)
       toast.success("Login successfully")
       await sleep()
-      login(response.data.user.name, response.data.user.email, response.data.token)
+      login(response.data.user.name, response.data.user.email, response.data.user.role, response.data.token)
       navigate("/vehicles")
     } catch (error) {
       toast.error("Login error, please try again")

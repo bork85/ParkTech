@@ -4,11 +4,12 @@ import { createContext, useContext, useState, useEffect } from "react";
 type AuthContextData = {
     user: {
         name: string;
-        email: string
+        email: string;
+        role: string;
     } | null,
     isAuthenticated: boolean,
     isLoading: boolean,
-    login: (name: string, email: string, token: string) => void,
+    login: (name: string, email: string, role: string, token: string) => void,
     logout: () => void
 }
 
@@ -16,7 +17,7 @@ const AuthContext = createContext<AuthContextData | undefined>(undefined);
 
 export function AuthProvider({ children }: {children: React.ReactNode}) {
 
-    const [user, setUser] = useState<{name: string, email: string} | null>(() => {
+    const [user, setUser] = useState<{name: string, email: string, role: string} | null>(() => {
         const stored = localStorage.getItem("@parktech:user");
         return stored ? JSON.parse(stored) : null;
     });
@@ -59,8 +60,8 @@ export function AuthProvider({ children }: {children: React.ReactNode}) {
         getValidAuthUser();
     },[])
 
-    const login = (name: string, email: string, token: string) => {
-        setUser({ name, email });
+    const login = (name: string, email: string, role: string, token: string) => {
+        setUser({ name, email, role });
         setToken(token);
     }
 

@@ -18,20 +18,18 @@ class CreateUserService {
             },
         });
         if(existUser){
-            //console.log("User with this email already exists.")
             throw new AppError("User with this email already exists.");
         }
-        //console.log("DADOS DO SERVICO - INPUT:", input)
         const hashPassword = await bcrypt.hash(input.password, 8);
         const user = await prisma.user.create({ 
             data: { 
                 name: input.name, 
                 email: input.email, 
                 password: hashPassword, 
-                role: input.role 
+                role: (input.role || "OPERATOR") as UserRole
             }
         });
-        return;
+        return user;
     }
     //async execute({ name, email, password, role }: CreateUserInput) {}
 }

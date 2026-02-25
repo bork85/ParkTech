@@ -3,10 +3,13 @@ import { Car, DollarSign, Settings, Users } from "lucide-react";
 import { Logo } from "../logo";
 import { useLocation } from "react-router-dom";
 import { Footer } from "../footer";
+import { useAuth } from "@/providers/authProvider";
 
 export function SideBar() {
   const { pathname } = useLocation();
-  const menuItems = [
+  const {user} = useAuth();
+
+  const menuAdmin = [
     //{ label: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
     //{ label: "Movimentações", path: "/movimentations", icon: ArrowRightLeft },
     { label: "Veículos", path: "/vehicles", icon: Car },    
@@ -16,6 +19,16 @@ export function SideBar() {
     { label: "Configurações", path: "/settings", icon: Settings },
   ];
 
+  const menuOperator = [
+    { label: "Veículos", path: "/vehicles", icon: Car }, 
+    { label: "Configurações", path: "/settings", icon: Settings },   
+  ]
+  let menuItems = [];
+  if(user?.role === 'ADMIN') {
+    menuItems = menuAdmin
+  } else {
+    menuItems = menuOperator
+  }
   return (
     <aside className="w-65 bg-sidebar flex flex-col">
       <div className="h-18 border-b border-sidebar-border w-full flex items-center p-6">

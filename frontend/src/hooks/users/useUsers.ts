@@ -16,7 +16,6 @@ export const useUsers = ():UsersResponse => {
 
     async function fetchData() {
         try {
-            console.log("FETCHDATA")
             const response = await getUsers();
             setData(response.data);
         } catch {

@@ -17,7 +17,6 @@ function Login() {
   const handleLogin = async (userData: LoginSchemaType) => {
     try {
       const response = await loginUsers(userData)
-      console.log(response)
       toast.success("Login successfully")
       await sleep()
       login(response.data.user.name, response.data.user.email, response.data.user.role, response.data.token)

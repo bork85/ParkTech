@@ -31,6 +31,7 @@ export function CreateUserDialog({onSuccess}: CreateUserDialogProps) {
     handleSubmit,
     formState: { errors, isSubmitting },
     watch,
+    reset,
     setValue,
   } = useForm({
     resolver: zodResolver(createUserSchema),
@@ -42,11 +43,11 @@ export function CreateUserDialog({onSuccess}: CreateUserDialogProps) {
   const userIsAdmin = useAuth().user?.role === "ADMIN";
   const handleCreateUser = async (data: createUserSchema) => {
     try {
-      console.log(data);
       await CreateUser(data);
       toast.success("Usuário criado com sucesso!");
       setOpen(false)
       onSuccess();
+      reset();
     } catch (error) {
       if (error instanceof AxiosError) {
         const errorMessage = error.response?.data?.error || error.response?.data?.message || error.message || "Erro ao criar usuário";
@@ -116,7 +117,7 @@ export function CreateUserDialog({onSuccess}: CreateUserDialogProps) {
 
           <DialogFooter className="w-full grid grid-cols-2 mt-6">
             <DialogClose asChild>
-              <Button type="button" variant="outline">
+              <Button type="button" variant="outline" >
                 Cancelar
               </Button>
             </DialogClose>

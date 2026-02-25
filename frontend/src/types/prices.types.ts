@@ -1,10 +1,10 @@
-export type fractionsPermittedType = "NÃO" | "30min" | "15min" | "10min" | "05min";
+export type fractionsPermittedType = "NONE" | "MINUTES_30" | "MINUTES_15" | "MINUTES_10" | "MINUTES_05";
 
 export type Price = {
     id: string;
     firstHourPrice: number;
-    aditionalHourPrice: number;
-    fractionsPermitted: fractionsPermittedType; 
+    additionalHourPrice: number;
+    fractionalTime: fractionsPermittedType; 
     isActive: boolean;   
     createdAt: string;
     updatedAt?: string;

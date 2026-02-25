@@ -39,8 +39,7 @@ const tableColumns = [
 ];
 
 function VehiclesPage() {
-  const { data, isLoading } = useVehicles();
-  //console.log(data)
+  const { data, isLoading, refetch } = useVehicles();
   return (
     <div>
       <div>
@@ -66,7 +65,7 @@ function VehiclesPage() {
             </SelectContent>
           </Select>
         </div>
-        <CreateVehicleDialog />
+        <CreateVehicleDialog onSuccess={refetch}/>
       </div>
       <div className="mt-4">
         <Table>
@@ -128,7 +127,7 @@ function VehiclesPage() {
                   <TableCell className="text-center">
                     {
                       <div className="flex justify-evenly">
-                        <EditVehicleDialog editingVehicle={vehicle}/>
+                        <EditVehicleDialog editingVehicle={vehicle} onSuccess={refetch}/>
                         <ExitVehicleDialog exitingVehicle={vehicle}/>                      
                       </div>
                     }

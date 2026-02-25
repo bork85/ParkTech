@@ -69,3 +69,14 @@ export function getCurrency(value: number) {
 
     return currency
 }
+
+export function formatFractionTime(value: string) {
+    switch(value) {
+        case "NONE": return "Não";
+        case "MINUTES_05": return "5min";
+        case "MINUTES_10": return "10min";
+        case "MINUTES_15": return "15min";
+        case "MINUTES_30": return "30min";
+        default: return "Não";
+    }
+}

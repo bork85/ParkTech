@@ -23,7 +23,7 @@ class CreatePriceConfigService {
                 additionalHourPrice: input.additionalHourPrice,
                 permitFractionalTime: input.permitFractionalTime,
                 fractionalTime: input.fractionalTime,
-                isActive: input.isActive                
+                isActive: true,                
             }
         })
         return config;

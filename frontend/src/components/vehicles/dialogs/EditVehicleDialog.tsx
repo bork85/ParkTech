@@ -11,32 +11,79 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { InputWithLabel } from "@/components/ui/input-with-label";
-import { editVehicleSchema, type EditVehicleSchema } from "@/schemas/vehicles/editVehicle.schema";
+import { Spinner } from "@/components/ui/spinner";
+import {
+  editVehicleSchema,
+  type EditVehicleSchema,
+} from "@/schemas/vehicles/editVehicle.schema";
+import { editVehicle } from "@/services/vehicles/vehicles.service";
 import type { Vehicle } from "@/types/vehicles.types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AxiosError } from "axios";
 import { Edit } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 interface EditVehicleProps {
   editingVehicle: Vehicle;
+  onSuccess: () => void;
 }
 
-export function EditVehicleDialog({editingVehicle}: EditVehicleProps) {
+export function EditVehicleDialog({
+  editingVehicle,
+  onSuccess,
+}: EditVehicleProps) {
+  const [open, setOpen] = useState(false);
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    reset,
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(editVehicleSchema),
     defaultValues: {
       plate: editingVehicle.plate,
       model: editingVehicle.model,
       color: editingVehicle.color,
-    }
+    },
   });
-  const handleEditVehicle = (data: EditVehicleSchema) => console.log(data);
+  const handleEditVehicle = async (data: EditVehicleSchema) => {
+    const payload: any = {
+      id: editingVehicle.id,
+    };
+    
+    if (data.plate !== editingVehicle.plate) {
+      payload.plate = data.plate;
+    }
+    if (data.model !== editingVehicle.model) {
+      payload.model = data.model;
+    }
+    if (data.color !== editingVehicle.color) {
+      payload.color = data.color;
+    }
+    
+    try {
+      await editVehicle(payload);
+      toast.success("Registro alterado com sucesso");
+      setOpen(false);
+      onSuccess();
+      reset();
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const errorMessage =
+          error.response?.data?.error ||
+          error.response?.data?.message ||
+          error.message ||
+          "Erro ao editar valor";
+        toast.error(errorMessage);
+      } else {
+        toast.error("Erro ao editar valor");
+      }
+    }
+  };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="muted" className="text-white">
           <Edit color="black" />
@@ -83,7 +130,16 @@ export function EditVehicleDialog({editingVehicle}: EditVehicleProps) {
                 Cancelar
               </Button>
             </DialogClose>
-            <Button type="submit">Salvar Registro</Button>
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? (
+                <>
+                  <Spinner />
+                  Editando...
+                </>
+              ) : (
+                "Editar Registro"
+              )}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

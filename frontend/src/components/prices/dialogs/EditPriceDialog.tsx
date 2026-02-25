@@ -14,32 +14,67 @@ import { InputWithLabel } from "@/components/ui/input-with-label";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { editPriceSchema } from "@/schemas/prices/editPrice.schema";
+import { editPrice } from "@/services/prices/prices.service";
 import type { Price } from "@/types/prices.types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AxiosError } from "axios";
 import { Edit } from "lucide-react";
+import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { toast } from "sonner";
 
 interface EditPriceProps {
   editingPrice: Price;
+  onSuccess: () => void;
 }
 
-export function EditPriceDialog({editingPrice}: EditPriceProps) {
+export function EditPriceDialog({editingPrice, onSuccess}: EditPriceProps) {
+  const [open, setOpen] = useState(false);
   const {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(editPriceSchema),
     defaultValues: {
+      id: editingPrice.id,
       firstHourPrice: editingPrice.firstHourPrice,
-      aditionalHourPrice: editingPrice.aditionalHourPrice,
-      fractionsPermitted: editingPrice.fractionsPermitted,
+      additionalHourPrice: editingPrice.additionalHourPrice,
+      fractionalTime: editingPrice.fractionalTime,
     }
   });
-  const handleEditPrice = (data: editPriceSchema) => console.log(data);
+  const handleEditPrice = async (data: editPriceSchema) => {
+    const payload = {
+      id: editingPrice.id,
+      firstHourPrice: data.firstHourPrice,
+      additionalHourPrice: data.additionalHourPrice,
+      permitFractionalTime: data.fractionalTime !== "NONE",
+      fractionalTime: data.fractionalTime,
+    };
+    
+    try {
+      await editPrice(payload);
+      toast.success("Cadastro editado com sucesso!");
+      setOpen(false);
+      onSuccess();
+      reset();
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const errorMessage =
+          error.response?.data?.error ||
+          error.response?.data?.message ||
+          error.message ||
+          "Erro ao editar precificação";
+        toast.error(errorMessage);
+      } else {
+        toast.error("Erro ao editar precificação");
+      }
+    }
+  };
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="muted" className="text-white">
           <Edit color="black" />
@@ -68,11 +103,11 @@ export function EditPriceDialog({editingPrice}: EditPriceProps) {
             type="number"
             placeholder="0.0..."
             className="text-sm bg-white shadow-sm"
-            error={errors.aditionalHourPrice?.message}
-            {...register("aditionalHourPrice", {valueAsNumber: true})}
+            error={errors.additionalHourPrice?.message}
+            {...register("additionalHourPrice", {valueAsNumber: true})}
           />
           <Controller
-            name="fractionsPermitted"
+            name="fractionalTime"
             control={control}
             render={({ field }) => (
               <div>
@@ -83,11 +118,11 @@ export function EditPriceDialog({editingPrice}: EditPriceProps) {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectItem value="NÃO">NÃO</SelectItem>
-                      <SelectItem value="30min">30min</SelectItem>
-                      <SelectItem value="15min">15min</SelectItem>
-                      <SelectItem value="10min">10min</SelectItem>
-                      <SelectItem value="05min">05min</SelectItem>
+                      <SelectItem value="NONE">NÃO</SelectItem>
+                      <SelectItem value="MINUTES_30">30min</SelectItem>
+                      <SelectItem value="MINUTES_15">15min</SelectItem>
+                      <SelectItem value="MINUTES_10">10min</SelectItem>
+                      <SelectItem value="MINUTES_05">05min</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>

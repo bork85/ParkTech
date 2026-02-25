@@ -7,7 +7,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
-import { formatDateToDMY, getCurrency, GetPriceStatus } from "@/utils/formatters";
+import { formatDateToDMY, formatFractionTime, getCurrency, GetPriceStatus } from "@/utils/formatters";
 import { usePrices } from "@/hooks/prices/usePrices";
 import { CreatePriceDialog } from "@/components/prices/dialogs/CreatePriceDialog";
 import { EditPriceDialog } from "@/components/prices/dialogs/EditPriceDialog";
@@ -15,14 +15,14 @@ import { EditPriceDialog } from "@/components/prices/dialogs/EditPriceDialog";
 const tableColumns = ["VALOR 1a HORA", "VALOR HORAS ADICIONAIS", "FRAÇÕES PERMITIDAS", "STATUS", "DATA CRIAÇÃO", "AÇÕES"];
 
 function PricesPage() {
-  const { data, isLoading } = usePrices();
+  const { data, isLoading, refetch } = usePrices();
   return (
     <div>
       <div>
         <h2 className="font-semibold mb-4 text-xl">Gestão de Preços</h2>
       </div>
       <div className="bg-white rounded-lg shadow-md flex items-center justify-end p-4 gap-4">
-       <CreatePriceDialog />
+       <CreatePriceDialog onSuccess={refetch}/>
       </div>
       <div className="mt-4">
         <Table>
@@ -50,12 +50,12 @@ function PricesPage() {
                 </tr>
               ))}
             {!isLoading &&
-              data.map((price) => (
+              data.map((price) => (                
                 <TableRow key={price.id} className={`h-6 shadow-sm ${price.isActive ? "bg-blue-700/20" : "text-gray-500"}`}
                 >
                   <TableCell className="text-center">{getCurrency(price.firstHourPrice)}</TableCell>
-                  <TableCell className="text-center">{getCurrency(price.aditionalHourPrice)}</TableCell>
-                  <TableCell className="text-center">{price.fractionsPermitted}</TableCell>
+                  <TableCell className="text-center">{getCurrency(price.additionalHourPrice)}</TableCell>
+                  <TableCell className="text-center">{formatFractionTime(price.fractionalTime)}</TableCell>
                   <TableCell className="text-center flex items-center justify-center">
                     {
                       <div
@@ -68,7 +68,7 @@ function PricesPage() {
                   </TableCell>                  
                   <TableCell className="text-center">{formatDateToDMY(price.createdAt)}</TableCell>
                   <TableCell className="text-center">
-                    <EditPriceDialog editingPrice={price} />
+                    <EditPriceDialog editingPrice={price} onSuccess={refetch}/>
                   </TableCell>
                 </TableRow>
               ))}

@@ -5,7 +5,6 @@ import { User } from "lucide-react";
 
 export function Header(){
     const {user} = useAuth();
-    //console.log(user);
     return (
         <header className="h-19 bg-white flex items-center justify-end px-4 shadow-md">
             <div className="flex items-center gap-4 pr-2">

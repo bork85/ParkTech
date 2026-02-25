@@ -7,27 +7,27 @@ interface PricesResponse {
     error: boolean;
     isLoading: boolean;
     isValid?: boolean;
+    refetch: () => void;
 }
 
 export const usePrices = ():PricesResponse => {
     const [data, setData] = useState<Price[] | []>([]);
     const [error, setError] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                setIsLoading(true);
-                const response = await getPrices();
-                setData(response.data);
-            } catch {
-                setError(true);
-            } finally {
-                setIsLoading(false);
-            }
+    async function fetchData() {
+        try {            
+            const data = await getPrices();
+            setData(data);
+        } catch {
+            setError(true);
+        } finally {
+            setIsLoading(false);
         }
+    }
+    useEffect(() => {
         fetchData();
     }, []);
 
-    return {data, error, isLoading};
+    return {data, error, isLoading, refetch: fetchData};
 }

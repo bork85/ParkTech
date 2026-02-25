@@ -2,8 +2,9 @@ import z from "zod";
 
 export const createPriceSchema = z.object({
     firstHourPrice: z.number().min(1, "O preço da primeira hora é obrigatório"),
-    aditionalHourPrice: z.number().min(1, "O preço da hora adicional é obrigatório"),
-    fractionsPermitted: z.enum(["NÃO", "30min", "15min", "10min", "05min"]),
+    additionalHourPrice: z.number().min(1, "O preço da hora adicional é obrigatório"),
+    permitFractionalTime: z.boolean().optional(),
+    fractionalTime: z.enum(["NONE", "MINUTES_30", "MINUTES_15", "MINUTES_10", "MINUTES_05"]),
 })
 
 export type createPriceSchema = z.infer<typeof createPriceSchema>

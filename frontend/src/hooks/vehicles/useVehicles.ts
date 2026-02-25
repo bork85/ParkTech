@@ -6,27 +6,27 @@ interface VehiclesResponse {
     data: Vehicle[] | [];
     error: boolean;
     isLoading: boolean;
+    refetch: () => void;
 }
 
 export const useVehicles = ():VehiclesResponse => {
     const [data, setData] = useState<Vehicle[] | []>([]);
     const [error, setError] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                setIsLoading(true);
-                const response = await getVehicles();
-                setData(response.data);
-            } catch {
-                setError(true);
-            } finally {
-                setIsLoading(false);
-            }
+    async function fetchData() {
+        try {                
+            const response = await getVehicles();
+            setData(response);
+        } catch {
+            setError(true);
+        } finally {
+            setIsLoading(false);
         }
+    }
+    useEffect(() => {
         fetchData();
     }, []);
 
-    return {data, error, isLoading};
+    return {data, error, isLoading, refetch: fetchData};
 }

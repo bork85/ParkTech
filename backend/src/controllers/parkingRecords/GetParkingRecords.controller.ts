@@ -4,10 +4,11 @@ import GetParkingRecordService from "../../services/parkingRecords/GetParkingRec
 class GetParkingRecords {
     async handle(req: Request, res: Response) {
         const search = req.query.search as string;
+        const status = req.query.status as 'ACTIVE' | 'FINISHED';
         const service = new GetParkingRecordService();
-        const response = await service.execute({search});
+        const response = await service.execute({search, status});
 
-        return res.status(201).json(response);
+        return res.status(200).json(response);
     }
 }
 export default new GetParkingRecords();

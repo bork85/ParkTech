@@ -9,6 +9,7 @@ import GetParkingRecordsController from "../controllers/parkingRecords/GetParkin
 import { validateQuerySchema } from "../middlewares/validateQuerySchema";
 import { getQueryParkingRecordSchema } from "../schemas/parkingRecords/getQueryParkingRecord.schema";
 import ExitParkingRecordsController from "../controllers/parkingRecords/ExitParkingRecords.controller";
+import GetParkingRecordPriceController from "../controllers/parkingRecords/GetParkingRecordPrice.controller";
 
 const router = Router();
 
@@ -16,6 +17,8 @@ router.post("/parking", validateAuth, validateSchema(createParkingRecordSchema),
             CreateParkingRecordController.handle);
 
 router.post("/parking/:id/exit", validateAuth, ExitParkingRecordsController.handle);
+
+router.get("/parking/:id/price", validateAuth, GetParkingRecordPriceController.handle);
 
 router.put("/parking/:id", validateAuth, validateSchema(updateParkingRecordSchema),
             UpdateParkingRecordController.handle);

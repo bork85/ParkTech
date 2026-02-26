@@ -8,7 +8,7 @@ interface User2 {
 
 export async function loginUsers(data: User2) {
     // COMENTADO PARA FASE DE TESTES, USANDO MOCK DE DADOS
-    const response = await api.post("/login", data)
+    const response = await api.post("/", data)
     
 
 /*     const mockUsers = [

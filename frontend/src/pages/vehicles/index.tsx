@@ -27,6 +27,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { CreateVehicleDialog} from "@/components/vehicles/dialogs/CreateVehicleDialog";
 import { EditVehicleDialog } from "@/components/vehicles/dialogs/EditVehicleDialog";
 import { ExitVehicleDialog } from "@/components/vehicles/dialogs/ExitVehicleDialog";
+import { useState } from "react";
+import { useDebounce } from "@/hooks/useDebounce";
 
 const tableColumns = [
   "PLACA",
@@ -39,7 +41,13 @@ const tableColumns = [
 ];
 
 function VehiclesPage() {
-  const { data, isLoading, refetch } = useVehicles();
+  const [search, setSearch] = useState('')
+  const [status, setStatus] = useState<"ACTIVE" | "FINISHED" | 'ALL'>('ALL')
+  const debouncedSearch = useDebounce(search)
+  const { data, isLoading, refetch } = useVehicles({
+    search: debouncedSearch,
+    status: status === 'ALL' ? undefined : status
+  });
   return (
     <div>
       <div>
@@ -51,16 +59,18 @@ function VehiclesPage() {
             placeholder="Buscar registro..."
             type="text"
             className="h-10 w-100"
+            onChange={ (e) => { setSearch(e.target.value) } }
           />
-          <Select>
+          <Select onValueChange={(value) => {
+              setStatus(value as typeof status)}}>
             <SelectTrigger className="w-40! h-10!">
               <SelectValue placeholder="Todos" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectItem value="all">Todos</SelectItem>
-                <SelectItem value="active">Estacionados</SelectItem>
-                <SelectItem value="finished">Saída registrada</SelectItem>
+                <SelectItem value="ALL">Todos</SelectItem>
+                <SelectItem value="ACTIVE">Estacionados</SelectItem>
+                <SelectItem value="FINISHED">Saída registrada</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
@@ -128,7 +138,9 @@ function VehiclesPage() {
                     {
                       <div className="flex justify-evenly">
                         <EditVehicleDialog editingVehicle={vehicle} onSuccess={refetch}/>
-                        <ExitVehicleDialog exitingVehicle={vehicle}/>                      
+                        {vehicle.status === 'ACTIVE' && (
+                          <ExitVehicleDialog exitingVehicle={vehicle} onSuccess={refetch}/>                    
+                        )}
                       </div>
                     }
                   </TableCell>

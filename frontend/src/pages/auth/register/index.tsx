@@ -28,7 +28,7 @@ function Register() {
       await registerUser(data);
       toast.success("Account created successfully!");
       await sleep();
-      navigate("/login");
+      navigate("/");
     } catch (err){
       if (err instanceof AxiosError) {
         const messageError = err.response?.data.error;
@@ -85,7 +85,7 @@ function Register() {
           </Button>
         </div>
       </form>
-      <a href="/login">
+      <a href="/">
         <Button variant="link" className="w-full mt-4">
           Já possui uma conta? Faça login aqui
         </Button>

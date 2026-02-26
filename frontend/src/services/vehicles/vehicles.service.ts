@@ -1,7 +1,11 @@
 import { api } from "@/lib/axios";
 
-export async function getVehicles() {
-    const {data} = await api.get("/parking")
+interface GetVehiclesParams {
+    search?: string;
+    status?: 'ACTIVE' | 'FINISHED';
+}
+export async function getVehicles(params: GetVehiclesParams) {
+    const {data} = await api.get("/parking", {params})
     
     return data;
 }
@@ -26,4 +30,11 @@ export async function editVehicle(payload: EditVehicleProps) {
     const {data} = await api.put(`/parking/${payload.id}`, payload)
     
     return data;
+}
+
+export async function exitVehicle(value:EditVehicleProps) {
+    return await api.post(`/parking/${value.id}/exit`)
+}
+export async function getVehiclePrice(value:EditVehicleProps) {
+    return await api.get(`/parking/${value.id}/price`)
 }

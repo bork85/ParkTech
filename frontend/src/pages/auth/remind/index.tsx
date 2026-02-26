@@ -15,7 +15,7 @@ function Remind() {
   const handleLogin = async (userData: LoginSchemaType) => {
     try {
       const response = await loginUsers(userData)
-      login(response.data.name, response.data.email)
+      login(response.data.name, response.data.email, response.data.role, response.data.token)
       navigate("/vehicles")
     } catch (error) {
       console.error("Erro no login:", error)
@@ -56,7 +56,7 @@ function Remind() {
         <Button variant="link" className="w-full mt-4">
           Não tem conta? Crie agora
         </Button></a>
-        <a href="/login">
+        <a href="/">
         <Button variant="link" className="w-full">
           Já possui uma conta? Faça login aqui
         </Button>

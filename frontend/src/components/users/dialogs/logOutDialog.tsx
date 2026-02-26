@@ -39,7 +39,7 @@ export function LogOutUserDialog() {
           </DialogClose>
           <Button type="button" onClick={()=>{
             logout()
-            navigate('/login')}}>Sim</Button>
+            navigate('/')}}>Sim</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -61,11 +61,11 @@ export function plateFormat(plate: string) {
     return plate.toUpperCase().replace('-', '');
 }
 
-export function getCurrency(value: number) {
+export function getCurrency(value?: number | undefined) {
     const currency = new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL'
-    }).format(value)
+    }).format(Number(value))
 
     return currency
 }

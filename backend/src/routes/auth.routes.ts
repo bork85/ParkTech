@@ -7,7 +7,7 @@ import { validateAuth } from "../middlewares/validateAuth";
 
 const router = Router();
 
-router.post("/login", LoginController.handle);
+router.post("/", LoginController.handle);
 router.post("/register", validateSchema(createUserSchema), CreateUserController.handle);
 
 router.get('/me', validateAuth, (_req, res) => {

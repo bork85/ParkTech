@@ -3,7 +3,7 @@ import { type LucideIcon } from "lucide-react";
 
 interface DashcardProps{
     title: string;
-    value: number | string;
+    value?: number | string;
     icon: LucideIcon;
     bgIconColor: string;
     iconColor: string;
@@ -19,7 +19,7 @@ export function DashCard({title, value, icon: Icon, bgIconColor, iconColor}: Das
       </div>
       <div>
         <p className="font-medium text-sm text-gray-500 mb-4">{title}</p>
-        <p className="font-bold text-2xl text-gray-800">{value}</p>
+        <p className="font-bold text-2xl text-gray-800">{value || 0}</p>
       </div>
     </div>
   );

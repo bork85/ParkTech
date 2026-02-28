@@ -8,6 +8,7 @@ import UsersPage from "@/pages/users";
 import PricesPage from "@/pages/prices";
 import SettingsPage from "@/pages/settings";
 import Remind from "@/pages/auth/remind";
+import DashboardPage from "@/pages/dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
         {
             path: "/settings",
             element: <SettingsPage />,
+        },
+                {
+            path: "/dashboard",
+            element: <DashboardPage />,
         },
     ],
   },

@@ -1,5 +1,5 @@
 //import { ArrowRightLeft, Car, ChartColumn, DollarSign, LayoutDashboard, Settings, Users } from "lucide-react";
-import { Car, DollarSign, Settings, Users } from "lucide-react";
+import { Car, DollarSign, Settings, Users, LayoutDashboard } from "lucide-react";
 import { Logo } from "../logo";
 import { useLocation } from "react-router-dom";
 import { Footer } from "../footer";
@@ -10,7 +10,7 @@ export function SideBar() {
   const {user} = useAuth();
 
   const menuAdmin = [
-    //{ label: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
+    { label: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
     //{ label: "Movimentações", path: "/movimentations", icon: ArrowRightLeft },
     { label: "Veículos", path: "/vehicles", icon: Car },    
     { label: "Usuários", path: "/users", icon: Users },

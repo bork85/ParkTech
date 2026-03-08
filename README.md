@@ -1,8 +1,11 @@
 # 🚗 ParkTech - Sistema de Gestão de Estacionamento
 
 <p align="center">
-  Sistema completo para gerenciamento de estacionamentos com controle de entrada/saída de veículos, precificação dinâmica e gestão de usuários.
+  <img src="./assets/logo-unBork.png" alt="logo-unBork">
 </p>
+
+  Sistema completo para gerenciamento de estacionamentos com controle de entrada/saída de veículos, precificação dinâmica e gestão de usuários.
+
 
 ## ✨ Características
 
@@ -232,12 +235,12 @@ VITE_API_URL=http://localhost:3000
 ## ✉️ Contato
 
 **Desenvolvedor**: Daniel Bork  
-**E-mail**: me chame em mailto:daniel.bork@yahoo.com.br
+**E-mail**: me chame em [daniel.bork@yahoo.com.br](mailto:daniel.bork@yahoo.com.br)
 
 ---
 
 **Versão**: 1.0.0  
-**Data**: Janeiro 2025  
+**Data**: Janeiro 2026  
 **Idioma**: Português (Brasil)
 
 Feito com ❤️ para facilitar a gestão de estacionamentos

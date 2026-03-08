@@ -1,11 +1,10 @@
-# 🚗 ParkTech - Sistema de Gestão de Estacionamento
+# ParkTech - Sistema de Gestão de Estacionamento
 
 <p align="center">
-  <img src="./assets/logo-unBork.png" alt="logo-unBork">
+  <img src="./frontend/public/logo-parktech.png" alt="logo-parktech">
 </p>
 
   Sistema completo para gerenciamento de estacionamentos com controle de entrada/saída de veículos, precificação dinâmica e gestão de usuários.
-
 
 ## ✨ Características
 
@@ -177,11 +176,76 @@ O sistema utiliza JWT para autenticação:
 ## 📱 Páginas
 
 - `/login` - Autenticação de usuários
+
+<p align="center">
+  <img src="./frontend/public/login.png" alt="login-page">
+</p>
+
 - `/register` - Cadastro de novos usuários
+
+<p align="center">
+  <img src="./frontend/public/criar usuario.png" alt="register-page">
+</p>
+
 - `/remind` - Recuperação de senha
+
+<p align="center">
+  <img src="./frontend/public/esqueceuSenha.png" alt="recovery-Password-page">
+</p>
+
+- `/users` - gestão de usuários
+
+<p align="center">
+  <img src="./frontend/public/usuarios.png" alt="users-page">
+</p>
+
+         - modal novo usuário
+
+<p align="center">
+  <img src="./frontend/public/modal novo usuario.png" alt="modal-users-page">
+</p>
+
+- `/dashboard` - Dashboard de gestão visual
+
+<p align="center">
+  <img src="./frontend/public/dashboard.png" alt="dashboard-page">
+</p>
+
 - `/vehicles` - Gestão de veículos
+
+<p align="center">
+  <img src="./frontend/public/veiculos.png" alt="vehicles-page">
+</p>
+
+        - modal editar veículo
+
+<p align="center">
+  <img src="./frontend/public/edit-vehicle.png" alt="modal-edit-vehicle-page">
+</p>
+
+        - modal de saída do veículo
+
+<p align="center">
+  <img src="./frontend/public/modal-exitVehicle.png" alt="modal-exit-vehicle-page">
+</p>
+
 - `/prices` - Gestão de precificação
+
+<p align="center">
+  <img src="./frontend/public/precos.png" alt="pricing-page">
+</p>
+
+        - modal editar precificação
+
+<p align="center">
+  <img src="./frontend/public/modal edit preco.png" alt="modal-edit-price-page">
+</p>
+
 - `/settings` - Configurações gerais
+
+<p align="center">
+  <img src="./frontend/public/configuracoes.png" alt="setings-page">
+</p>
 
 ## 🐳 Docker
 

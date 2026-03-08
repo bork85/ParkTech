@@ -31,8 +31,8 @@ function DashboardPage() {
             <SelectGroup>
               <SelectItem value="today">Hoje</SelectItem>
               <SelectItem value="week">Ultimos 7 dias</SelectItem>
-              <SelectItem value="month">Mês atual</SelectItem>
-              <SelectItem value="year">Ano atual</SelectItem>
+              <SelectItem value="month">Ultimos 30 dias</SelectItem>
+              <SelectItem value="year">Ultimos 365 dias</SelectItem>
               <SelectItem value="all">Todo periodo</SelectItem>
             </SelectGroup>
           </SelectContent>

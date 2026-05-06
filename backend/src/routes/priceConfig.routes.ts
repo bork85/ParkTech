@@ -5,9 +5,9 @@ import { validateAuth } from "../middlewares/validateAuth";
 import { UserRole } from "../generated/prisma/enums";
 import { validateRole } from "../middlewares/validateRole";
 import { UpdatePriceConfigSchema } from "../schemas/priceConfig/updatePriceConfig.schema";
-import CreatePriceConfigController from "../controllers/PriceConfig/CreatePriceConfig.controller";
-import GetPriceConfigController from "../controllers/PriceConfig/GetPriceConfig.controller";
-import UpdatePriceConfigController from "../controllers/PriceConfig/UpdatePriceConfig.controller";
+import CreatePriceConfigController from "../controllers/priceConfig/CreatePriceConfig.controller";
+import GetPriceConfigController from "../controllers/priceConfig/GetPriceConfig.controller";
+import UpdatePriceConfigController from "../controllers/priceConfig/UpdatePriceConfig.controller";
 
 const router = Router();
 

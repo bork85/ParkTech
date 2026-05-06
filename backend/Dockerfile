@@ -6,16 +6,16 @@ RUN npm install -g pnpm
 WORKDIR /app
 
 # Copiar lock file e package.json
-COPY pnpm-lock.yaml ./
-COPY package.json ./
+COPY backend/pnpm-lock.yaml ./
+COPY backend/package.json ./
 
 # Instalar dependências
 RUN pnpm install --frozen-lockfile
 
 # Copiar código fonte e prisma
-COPY prisma ./prisma/
-COPY src ./src/
-COPY tsconfig.json ./
+COPY backend/prisma ./prisma/
+COPY backend/src ./src/
+COPY backend/tsconfig.json ./
 
 # Gerar cliente Prisma e fazer build
 RUN pnpm exec prisma generate
@@ -29,8 +29,8 @@ RUN npm install -g pnpm
 WORKDIR /app
 
 # Copiar lock file e package.json
-COPY pnpm-lock.yaml ./
-COPY package.json ./
+COPY backend/pnpm-lock.yaml ./
+COPY backend/package.json ./
 
 # Instalar apenas dependências de produção
 RUN pnpm install --frozen-lockfile --production

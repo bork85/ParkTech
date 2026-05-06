@@ -1,5 +1,5 @@
 import prisma from "../../config/database";
-import { ParkingRecordStatus } from "../../generated/prisma/client";
+import { ParkingRecordStatus } from "../../generated/prisma/enums";
 import { AppError } from "../../utils/errors";
 
 interface CreateParkingRecordServiceInput {

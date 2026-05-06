@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import CreateParkingRecordService from "../../services/parkingRecords/CreateParkingRecord.service";
 
-class GetParkingRecordController {
+class CreateParkingRecordController {
     async handle(req: Request, res: Response) {
         const input = req.body;
         input.userId = req.user?.id;
@@ -12,4 +12,4 @@ class GetParkingRecordController {
         return res.status(201).json(response);
     }
 }
-export default new GetParkingRecordController();
+export default new CreateParkingRecordController();

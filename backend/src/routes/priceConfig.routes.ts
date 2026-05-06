@@ -5,14 +5,14 @@ import { validateAuth } from "../middlewares/validateAuth";
 import { UserRole } from "../generated/prisma/enums";
 import { validateRole } from "../middlewares/validateRole";
 import { UpdatePriceConfigSchema } from "../schemas/priceConfig/updatePriceConfig.schema";
-import CreatepriceConfigController from "../controllers/PriceConfig/CreatepriceConfig.controller";
+import CreatePriceConfigController from "../controllers/PriceConfig/CreatePriceConfig.controller";
 import GetPriceConfigController from "../controllers/PriceConfig/GetPriceConfig.controller";
 import UpdatePriceConfigController from "../controllers/PriceConfig/UpdatePriceConfig.controller";
 
 const router = Router();
 
 router.post("/price-config", validateAuth, validateRole(UserRole.ADMIN), validateSchema(CreatePriceConfigSchema), 
-    CreatepriceConfigController.handle);
+    CreatePriceConfigController.handle);
 
 router.get("/price-config", validateAuth, validateRole(UserRole.ADMIN), GetPriceConfigController.handle);
 

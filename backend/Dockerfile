@@ -11,7 +11,7 @@ COPY backend/package.json ./
 
 # Instalar dependências
 RUN pnpm config set enable-pre-post-scripts true
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --ignore-scripts=false
 
 # Copiar código fonte e prisma
 COPY backend/prisma ./prisma/
@@ -34,7 +34,8 @@ COPY backend/pnpm-lock.yaml ./
 COPY backend/package.json ./
 
 # Instalar apenas dependências de produção
-RUN pnpm install --frozen-lockfile --production
+RUN pnpm config set enable-pre-post-scripts true
+RUN pnpm install --frozen-lockfile --production --ignore-scripts=false
 
 # Copiar arquivos gerados do builder
 COPY --from=builder /app/dist ./dist/

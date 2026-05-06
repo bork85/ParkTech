@@ -39,7 +39,12 @@ RUN pnpm install --frozen-lockfile --production --ignore-scripts=false
 
 # Copiar arquivos gerados do builder
 COPY --from=builder /app/dist ./dist/
+COPY --from=builder /app/prisma ./prisma/
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma/
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma/
+
+# Gerar cliente Prisma novamente em produção
+RUN pnpm exec prisma generate
 
 EXPOSE 3333
 

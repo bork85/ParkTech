@@ -1,19 +1,20 @@
 import { CreatePriceDialog } from "@/components/prices/dialogs/CreatePriceDialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePrices } from "@/hooks/prices/usePrices";
-import { getCurrency } from "@/utils/formatters";
+import { formatFractionTime, getCurrency } from "@/utils/formatters";
 import { Clock2, DollarSign } from "lucide-react";
 
 function SettingsPage() {
-    const {data, isLoading} = usePrices();
+    const {data, isLoading, refetch} = usePrices();
     const dataValid = data.filter(price => price.isActive === true)
+    dataValid[0]?.fractionalTime
   return (
     <div>
       <div>
         <h2 className="font-semibold mb-4 text-xl">Configurações Gerais</h2>
       </div>
       <div className="bg-white rounded-lg shadow-md flex items-center justify-end p-4 gap-4">
-        <CreatePriceDialog />
+        <CreatePriceDialog  onSuccess={refetch}/>
       </div>
       <div className="bg-white mt-4 rounded-lg shadow-sm">
         <div className="flex items-center justify-start text-sidebar">
@@ -39,7 +40,7 @@ function SettingsPage() {
                 <Skeleton className="h-8 w-24 rounded-full"/>
             )}
             {!isLoading && (                
-            <p className="font-bold text-2xl text-sidebar">{getCurrency(dataValid[0]?.aditionalHourPrice)}</p>
+            <p className="font-bold text-2xl text-sidebar">{getCurrency(dataValid[0]?.additionalHourPrice)}</p>
             )}
           </div>
           <div className="w-full h-30 bg-white border rounded-lg shadow-sm flex flex-col items-center justify-evenly">
@@ -48,7 +49,7 @@ function SettingsPage() {
                 <Skeleton className="h-8 w-24 rounded-full"/>
             )}
             {!isLoading && (                
-            <p className="font-bold text-2xl text-sidebar">{dataValid[0]?.fractionsPermitted}</p>
+            <p className="font-bold text-2xl text-sidebar">{formatFractionTime(dataValid[0]?.fractionalTime)}</p>
             )}
           </div>
         </div>

@@ -1,18 +1,44 @@
-FROM node:20-alpine
+FROM node:20-alpine AS builder
+
+# Instalar pnpm
+RUN npm install -g pnpm
 
 WORKDIR /app
 
+# Copiar lock file e package.json
+COPY pnpm-lock.yaml ./
 COPY package.json ./
+
+# Instalar dependências
+RUN pnpm install --frozen-lockfile
+
+# Copiar código fonte e prisma
 COPY prisma ./prisma/
+COPY src ./src/
+COPY tsconfig.json ./
 
-RUN npm install
+# Gerar cliente Prisma e fazer build
+RUN pnpm exec prisma generate
+RUN pnpm run build
 
-COPY . .
+# Stage de produção
+FROM node:20-alpine
 
-RUN npx prisma generate
+RUN npm install -g pnpm
 
-RUN npm run build
+WORKDIR /app
+
+# Copiar lock file e package.json
+COPY pnpm-lock.yaml ./
+COPY package.json ./
+
+# Instalar apenas dependências de produção
+RUN pnpm install --frozen-lockfile --production
+
+# Copiar arquivos gerados do builder
+COPY --from=builder /app/dist ./dist/
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma/
 
 EXPOSE 3333
 
-CMD ["npm", "start"]
+CMD ["node", "dist/server.js"]

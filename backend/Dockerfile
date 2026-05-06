@@ -10,6 +10,7 @@ COPY backend/pnpm-lock.yaml ./
 COPY backend/package.json ./
 
 # Instalar dependências
+RUN pnpm config set enable-pre-post-scripts true
 RUN pnpm install --frozen-lockfile
 
 # Copiar código fonte e prisma

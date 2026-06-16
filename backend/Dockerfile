@@ -6,14 +6,14 @@ WORKDIR /app
 
 COPY pnpm-lock.yaml ./
 COPY package.json ./
+COPY .npmrc ./
 
-RUN pnpm config set enable-pre-post-scripts true
-RUN pnpm install --frozen-lockfile --ignore-scripts=false
+RUN pnpm install --frozen-lockfile
 
 COPY prisma ./prisma/
 COPY src ./src/
 COPY tsconfig.json ./
-COPY prisma.config.ts ./
+COPY prisma.config.js ./
 
 ENV DATABASE_URL=postgresql://placeholder:placeholder@localhost:5432/placeholder
 RUN pnpm exec prisma generate
@@ -27,17 +27,16 @@ WORKDIR /app
 
 COPY pnpm-lock.yaml ./
 COPY package.json ./
+COPY .npmrc ./
+COPY prisma.config.js ./
+COPY prisma ./prisma/
 
-RUN pnpm config set enable-pre-post-scripts true
-RUN pnpm install --frozen-lockfile --production --ignore-scripts=false
+RUN pnpm install --frozen-lockfile --production
 
 COPY --from=builder /app/dist ./dist/
-COPY --from=builder /app/prisma ./prisma/
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma/
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma/
 
-RUN pnpm exec prisma generate
-
 EXPOSE 3333
 
-CMD ["node", "dist/server.js"]
+CMD ["sh", "-c", "pnpm exec prisma migrate deploy && node dist/server.js"]

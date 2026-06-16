@@ -15,6 +15,7 @@ COPY src ./src/
 COPY tsconfig.json ./
 COPY prisma.config.ts ./
 
+ENV DATABASE_URL=postgresql://placeholder:placeholder@localhost:5432/placeholder
 RUN pnpm exec prisma generate
 RUN pnpm run build
 
